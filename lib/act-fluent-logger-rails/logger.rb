@@ -109,10 +109,22 @@ module ActFluentLoggerRails
                     v
                   end rescue :error
       end
+
+      add_host_name!
       @fluent_logger.post(@tag, @map)
       @severity = 0
       @messages.clear
       @map.clear
+    end
+
+    def add_host_name!
+      hostname =
+        if Rails.env.production?
+          `/usr/bin/ec2metadata --public-hostname`
+        else
+          `hostname`
+        end
+      @map.store(:host, hostname)
     end
 
     def close
