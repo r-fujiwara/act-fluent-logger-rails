@@ -28,9 +28,9 @@ module ActFluentLoggerRails
       level = SEV_LABEL.index(Rails.application.config.log_level.to_s.upcase)
       logger = ActFluentLoggerRails::FluentLogger.new(settings, level, log_tags)
       logger = ActiveSupport::TaggedLogging.new(logger)
-      rails_logger = ActiveSupport::Logger.new(Rails.root.join("log", "#{Rails.env}.log"))
-      rails_logger.level = ::Logger::DEBUG
-      logger.extend ActiveSupport::Logger.broadcast(rails_logger)
+      #rails_logger = ActiveSupport::Logger.new(Rails.root.join("log", "#{Rails.env}.log"))
+      #rails_logger.level = ::Logger::DEBUG
+      #logger.extend ActiveSupport::Logger.broadcast(rails_logger)
       logger.extend self
     end
 
