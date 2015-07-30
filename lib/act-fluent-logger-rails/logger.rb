@@ -133,7 +133,7 @@ module ActFluentLoggerRails
 
       instance_id =
         if Rails.env.production? || Rails.env.staging? || Rails.env.alpha?
-          `/usr/bin/ec2metadata --instance_id`
+          `/usr/bin/ec2metadata --instance-id`
         else
           `hostname`
         end
