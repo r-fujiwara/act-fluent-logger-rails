@@ -123,12 +123,22 @@ module ActFluentLoggerRails
 
     def add_host_name!
       hostname =
-        if Rails.env.production?
+        if Rails.env.production? || Rails.env.staging? || Rails.env.alpha?
           `/usr/bin/ec2metadata --public-hostname`
         else
           `hostname`
         end
-      @map.store(:host, hostname)
+
+      @map.store(:hostname, hostname)
+
+      instance_id =
+        if Rails.env.production? || Rails.env.staging? || Rails.env.alpha?
+          `/usr/bin/ec2metadata --instance_id`
+        else
+          `hostname`
+        end
+
+      @map.store(:instance_id, instance_id)
     end
 
     def close
